@@ -12,7 +12,7 @@ class CreateTableBalloons extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('ballons', function(Blueprint $table)
+		Schema::create('balloons', function(Blueprint $table)
 		{
 			$table->increments('id');
 			$table->timestamps();
@@ -32,7 +32,7 @@ class CreateTableBalloons extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('ballons');
+		Schema::drop('balloons');
 	}
 
 }
