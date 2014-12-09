@@ -2,16 +2,27 @@
 
 class ExampleTest extends TestCase {
 
+    public function setUp()
+    {
+        parent::setUp();
+
+        Artisan::call('migrate');
+    }
+
+    
 	/**
 	 * A basic functional test example.
 	 *
 	 * @return void
 	 */
-	public function testBasicExample()
+	public function test_fetches_admin_users()
 	{
-		$crawler = $this->client->request('GET', '/');
+        User::create(['username' => 'admin', 'role' => 'admin']);
+        User::create(['username' => 'reader', 'role' => 'reader']);
 
-		$this->assertTrue($this->client->getResponse()->isOk());
+        $users = User::admins()->get();
+
+        $this->assertCount(1, $users);
 	}
 
 }
