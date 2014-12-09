@@ -18,6 +18,11 @@ class CreateTableBalloons extends Migration {
 			$table->timestamps();
             $table->text('text')->nullable();
             $table->string('lang');
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->integer('strip_id')->unsigned();
+            $table->foreign('strip_id')->references('id')->on('strips');
+            $table->primary('id');
 		});
 	}
 
