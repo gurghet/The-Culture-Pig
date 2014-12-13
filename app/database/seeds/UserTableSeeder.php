@@ -5,17 +5,19 @@
  * @author    Andrea Passaglia <gurghet@gmail.com>
  */
 
-class UserTableSeeder
-{
+class UserTableSeeder extends Seeder {
     public function run()
     {
         $faker = Faker\Factory::create();
 
-        for ($i = 0; $i < 100; $i++) {
+        for ($i = 0; $i < 120; $i++) {
             $user = User::create([
                 'username' => $faker->userName,
                 'password' => $faker->word,
-                'role' => array_rand(['admin','editor','reviewer','reader'])
+                'role' => $faker->randomElement(['admin',
+                                                 'editor',
+                                                 'reviewer',
+                                                 'reader'])
             ]);
         }
     }
