@@ -39,4 +39,5 @@ tramp
 
 # cask packages
 .cask/
-###END Emacs.idea/
+###END Emacs
+.idea
