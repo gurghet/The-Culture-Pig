@@ -9,8 +9,6 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	use UserTrait, RemindableTrait;
 
-    protected $fillable = ['username', 'role']; // TODO: is it safe to have role here?
-
 	/**
 	 * The attributes excluded from the model's JSON form.
 	 *

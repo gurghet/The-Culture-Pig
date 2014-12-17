@@ -7,5 +7,7 @@
 
 class Balloon extends Eloquent
 {
-    
+    public function strip() {
+        return $this->belongsTo('Strip');
+    }
 }

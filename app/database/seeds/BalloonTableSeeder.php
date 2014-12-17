@@ -10,7 +10,7 @@ class BalloonTableSeeder extends Seeder {
     {
         $faker = Faker\Factory::create();
         
-        for ($i = 0; $i < 280; $i++) {
+        for ($i = 0; $i < 50; $i++) {
             $balloon = Balloon::create([
 	    	    'text' => $faker->sentence,
                 'lang' => $faker->locale,

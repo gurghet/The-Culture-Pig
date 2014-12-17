@@ -16,8 +16,9 @@ class CreateTableStrips extends Migration {
 		{
 			$table->increments('id');
 			$table->timestamps();
-            $table->text('title');
+            $table->text('title')->nullable();
             $table->string('path');
+            $table->date('publish')->nullable();
 		});
 	}
 

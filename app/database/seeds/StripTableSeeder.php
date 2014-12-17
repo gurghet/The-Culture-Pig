@@ -10,12 +10,11 @@ class StripTableSeeder extends Seeder {
     {
         $faker = Faker\Factory::create();
         
-        for ($i = 0; $i < 70; $i++) {
+        for ($i = 0; $i < 20; $i++) {
             $strip = Strip::create([
                 'title' => $faker->sentence,
                 'path' => $faker->image('/tmp', 690, 240, 'abstract'),
-                'page' => $i+$faker->randomDigit,
-                'publish' => $faker->date
+                'publish' => $faker->date(NULL, '2018-09-09')
             ]);
         }
     }

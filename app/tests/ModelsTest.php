@@ -5,31 +5,57 @@
  * @author    Andrea Passaglia <gurghet@gmail.com>
  */
 
+use Carbon\Carbon;
+
 class ModelsTest extends TestCase {
 
-    public function setUp()
-    {
-        parent::setUp();
+     public function setUp() {
+         
+         parent::setUp();
 
-        Artisan::call('migrate');
+         Artisan::call('migrate');
 
-        $this->seed();
+     }
+
+
+    public function test_published_returns_strips_published_today_or_in_the_past() {
+
+        $today = Carbon::today();
+        $tomorrow = Carbon::tomorrow();
+
+        Strip::create(['path' => 'in.jpg', 'publish' => '1993-12-14']);
+        Strip::create(['path' => 'in.jpg', 'publish' =>  $today->toDateString()]);
+        Strip::create(['path' => 'out.jpg', 'publish' => $tomorrow->toDateString()]);
+        Strip::create(['path' => 'out.jpg', 'publish' => '2019-02-04']);
+        
+        $publishedStrips = Strip::published()->get();
+        
+        $this->assertCount(2, $publishedStrips);
+        $this->assertEquals('in.jpg', $publishedStrips[0]->path);
+        $this->assertEquals('in.jpg', $publishedStrips[1]->path);
     }
 
-    public function test_user_givenID_getUsername()
-    {
-        $user = User::find(1);
+    public function test_lastPublished_returns_last_strip_published() {
+        
+        $today = Carbon::today();
+        $yesterday = Carbon::yesterday();
 
-        $this->assertStringMatchesFormat('%s', $user->username);
-    }
+        Strip::create(['path' => 'no-dp.jpg', 'publish' => '1993-12-14']);
+        Strip::create(['path' => 'ok1.jpg', 'publish' =>  $yesterday->toDateString()]);
+        Strip::create(['path' => 'no-df.jpg', 'publish' => '2019-02-04']);
 
-    public function test_balloon_givenPageAndLang_fetchAll()
-    {
-        // TODO: preconditions are sanitized text, delete me when a test exists
+        $lastStrip = Strip::lastPublished()->get();
 
-        $balloons = Balloon::page(2)->lang('en_GB')->get();
+        $this->assertCount(1, $lastStrip, "It thinks there are " . count($lastStrip) . " last strips instead of 1.");
+        $this->assertEquals('ok1.jpg', $lastStrip[0]->path);
 
-        $this->assertEquals('Too much cake.', $balloons[1]->text);
+        Strip::create(['path' => 'ok2.jpg', 'publish' =>  $today->toDateString()]);
+
+        $lastStrip = Strip::lastPublished()->get();
+
+        $this->assertCount(1, $lastStrip, "After adding the today's strip, it thinks there are " . count($lastStrip) . " last strips.");
+        $this->assertEquals('ok2.jpg', $lastStrip[0]->path);
+        
     }
 
 }
