@@ -27,19 +27,6 @@ class HomeTest extends TestCase {
         
     }
 
-    public function test_home_page_contains_strip() {
-
-        $crawler = $this->client->request('GET', '/');
-
-        $imgNode = $crawler->filterXPath('//*[@id="strip"]/img');
-        $imgSrc = $imgNode->attr('src');
-
-        $validImgUrl = '/[^\/\?\*\:\;\{\}]+\.(png|jpg)/';
-        
-        $this->assertRegExp($validImgUrl, $imgSrc);
-        
-    }
-
     public function test_strip_index_route_calls_lastPublished() {
 
         $this->stripMock

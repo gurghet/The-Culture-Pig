@@ -18,7 +18,7 @@ class ModelsTest extends TestCase {
      }
 
 
-    public function test_published_returns_strips_published_today_or_in_the_past() {
+    public function test_published_scope_returns_published_strips() {
 
         $today = Carbon::today();
         $tomorrow = Carbon::tomorrow();
